@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import AudioVisualiser from './AudioVisualiser';
-import { Grid, Slider } from '@material-ui/core';
+import { Grid, Slider, Typography } from '@material-ui/core';
+import Stack from '@mui/material/Stack';
 const defaultSampleRate = 48000
 // Min and Max HZ [20-20000] for the human-spoken language 
 const minHZ = 95
@@ -50,25 +51,26 @@ class AudioAnalyser extends Component {
   render() {
     return (
       <Grid container direction="column">
-        <Grid item xs={6}>
-        <Slider aria-label="Min HZ" value={this.state.minHZ} onChangeCommitted={(value)=>{
-          this.setState({minHZ:value})
-        }} />
+        <Stack spacing={2} direction="row" sx={{ mb: 1 }} alignItems="center">
+          <Slider aria-label="Min HZ" sx={{ height: 140, width: 100 }} value={this.state.minHZ} onChangeCommitted={(value) => {
+            this.setState({ minHZ: value })
+          }} />
+          <Typography>Min HZ</Typography>
+        </Stack>
+        <Grid item xs={4}>
+          <Slider aria-label="Max HZ" value={this.state.maxHZ} onChangeCommitted={(value) => {
+            this.setState({ maxHZ: value })
+          }} />
         </Grid>
-        <Grid item xs={6}>
-        <Slider aria-label="Max HZ" value={this.state.maxHZ} onChangeCommitted={(value)=>{
-          this.setState({maxHZ:value})
-        }} />
-        </Grid>
-        <Grid item xs={6}>
-        <Slider aria-label="Mic Treshhold" value={this.state.treshhold} onChangeCommitted={(value)=>{
-          this.setState({treshhold:value})
-        }} />
+        <Grid item xs={4}>
+          <Slider aria-label="Mic Treshhold" value={this.state.treshhold} onChangeCommitted={(value) => {
+            this.setState({ treshhold: value })
+          }} />
         </Grid>
         <Grid>
-        <AudioVisualiser audioData={this.state.audioData}
+          <AudioVisualiser audioData={this.state.audioData}
             sampleRate={this.sampleRate != null ? this.sampleRate : defaultSampleRate}
-            options={{minHZ:this.state.minHZ, maxHZ:this.state.maxHZ, treshhold:this.state.treshhold }} />
+            options={{ minHZ: this.state.minHZ, maxHZ: this.state.maxHZ, treshhold: this.state.treshhold }} />
         </Grid>
       </Grid>);
   }
