@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import AudioVisualiser from './AudioVisualiser';
 import { Grid, Slider, Typography } from '@material-ui/core';
-import Stack from '@mui/material/Stack';
 const defaultSampleRate = 48000
 // Min and Max HZ [20-20000] for the human-spoken language 
 const minHZ = 95
@@ -50,23 +49,43 @@ class AudioAnalyser extends Component {
 
   render() {
     return (
-      <Grid container direction="column">
-        <Stack spacing={2} direction="row" sx={{ mb: 1 }} alignItems="center">
-          <Slider aria-label="Min HZ" sx={{ height: 140, width: 100 }} value={this.state.minHZ} onChangeCommitted={(value) => {
-            this.setState({ minHZ: value })
-          }} />
-          <Typography>Min HZ</Typography>
-        </Stack>
+      <Grid container margin="15px" direction="column" alignContent="center" justifyContent="center">
         <Grid item xs={4}>
-          <Slider aria-label="Max HZ" value={this.state.maxHZ} onChangeCommitted={(value) => {
-            this.setState({ maxHZ: value })
-          }} />
+          <Slider aria-label="Min HZ"
+            value={this.state.minHZ}
+            min={0}
+            max={100}
+            step={5}
+            marks
+            onChangeCommitted={(event, value) => {
+              this.setState({ minHZ: value })
+            }} />
+          <Typography>{"Min HZ: " + this.state.minHZ}</Typography>
         </Grid>
         <Grid item xs={4}>
-          <Slider aria-label="Mic Treshhold" value={this.state.treshhold} onChangeCommitted={(value) => {
-            this.setState({ treshhold: value })
-          }} />
+          <Slider aria-label="Max HZ"
+            value={this.state.maxHZ}
+            min={200}
+            max={300}
+            step={5}
+            marks
+            onChangeCommitted={(event, value) => {
+              this.setState({ maxHZ: value })
+            }} />
+          <Typography>{"Max HZ: " + this.state.maxHZ}</Typography>
         </Grid>
+        <Grid item xs={4}>
+          <Slider aria-label="Mic Treshhold"
+            value={this.state.treshhold}
+            min={0}
+            max={300}
+            step={5}
+            marks
+            onChangeCommitted={(event, value) => {
+              this.setState({ treshhold: value })
+            }} />
+        </Grid>
+        <Typography>{"Mic treshhold: " + this.state.treshhold}</Typography>
         <Grid>
           <AudioVisualiser audioData={this.state.audioData}
             sampleRate={this.sampleRate != null ? this.sampleRate : defaultSampleRate}

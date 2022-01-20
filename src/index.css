@@ -26,6 +26,11 @@ main .controls {
   background: #333e5a;
   color: #fff;
 }
+
+main .analyser {
+  margin:15px;
+}
+
 main canvas {
   padding: 20px;
   margin: 0 auto;

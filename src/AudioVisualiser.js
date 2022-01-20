@@ -20,7 +20,7 @@ class AudioVisualiser extends Component {
 
   componentDidMount() {
     
-    this.checkingInterval = setInterval(() => { this.checkIfSpoken() }, 2000)
+    this.checkingInterval = setInterval(() => { this.checkIfSpoken() }, 500)
   }
 
   componentDidUpdate(prevProps) {
