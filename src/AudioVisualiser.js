@@ -15,18 +15,19 @@ class AudioVisualiser extends Component {
     this.canvas = React.createRef();
     this.interval = null;
     this.checkingInterval = null;
-    this.sampleRate = this.props.sampleRate
   }
 
   componentDidMount() {
-    
-    this.checkingInterval = setInterval(() => { this.checkIfSpoken() }, 500)
+    if(this.props.sampleRate && this.props.audioData && this.props.audioData.length && this.props.audioData.length != 0){
+      this.checkingInterval = setInterval(() => { this.checkIfSpoken() }, 500) 
+    } 
   }
 
   componentDidUpdate(prevProps) {
-    // if(prevProps.audioData!=this.props.audioData){
-    //   this.checkIfSpoken()
-    // }
+    if(this.props.sampleRate && this.props.audioData && this.props.audioData.length && this.props.audioData.length != 0 && this.props.audioData != prevProps.audioData){
+      clearInterval(this.checkingInterval)
+      this.checkingInterval = setInterval(() => { this.checkIfSpoken() }, 500)
+    }
     this.draw();
   }
 
@@ -71,7 +72,7 @@ class AudioVisualiser extends Component {
     // https://en.wikipedia.org/wiki/Nyquist_frequency
 
     // console.log("All frequencies \n" + this.props.audioData)
-    let NF = this.sampleRate / 2;
+    let NF = this.props.sampleRate / 2;
 
     let singleHZStep = NF / this.props.audioData.length
 
@@ -82,7 +83,7 @@ class AudioVisualiser extends Component {
     console.log("maxlimit " + maxIndex + ", stands for: " + maxIndex*singleHZStep + " HZ")
 
     let usableSoundLevels = this.props.audioData.slice(minIndex, maxIndex + 2)
-    console.log("Sound levels of man-spoken frequencies\n" + usableSoundLevels)
+    // console.log("Sound levels of man-spoken frequencies\n" + usableSoundLevels)
     if (usableSoundLevels.length > 0) {
       if (usableSoundLevels.reduce((a, b) => (a + b)) / usableSoundLevels.length > this.props.options.treshhold) {
         this.setState({ speaking: true })

@@ -87,9 +87,10 @@ class AudioAnalyser extends Component {
         </Grid>
         <Typography>{"Mic treshhold: " + this.state.treshhold}</Typography>
         <Grid>
-          <AudioVisualiser audioData={this.state.audioData}
-            sampleRate={this.sampleRate != null ? this.sampleRate : defaultSampleRate}
-            options={{ minHZ: this.state.minHZ, maxHZ: this.state.maxHZ, treshhold: this.state.treshhold }} />
+          {this.state.minHZ && this.state.maxHZ && this.state.treshhold && this.state.audioData && <AudioVisualiser audioData={this.state.audioData}
+            sampleRate={this.sampleRate != null ? this.sampleRate : this.props.defaultSampleRate}
+            options={{ minHZ: this.state.minHZ, maxHZ: this.state.maxHZ, treshhold: this.state.treshhold }} /> }
+          
         </Grid>
       </Grid>);
   }
